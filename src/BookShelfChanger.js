@@ -1,27 +1,39 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
 class BookShelfChanger extends Component {
     state = {
-        value: this.props.currentShelf
+        value: ''
     }
 
-    handleSelect = event => {
-        this.props.onSelect(event.target.value)
+    componentDidMount(){
+        const { currentShelf } = this.props;
+
         this.setState({
-            value: event.target.value
-        })
+            value: currentShelf
+        });
+    };
+
+    handleSelect = event => {
+        const { onSelect } = this.props;
+        const value = event.target.value;
+
+        onSelect(value);
+
+        this.setState({
+            value
+        });
     }
 
     render(){
-       
+       const { value } = this.state;
         return(
             <div className="book-shelf-changer">
-                <select value={this.state.value} onChange={this.handleSelect}>
-                <option value="move" disabled>Move to...</option>
-                <option value="currentlyReading">Currently Reading</option>
-                <option value="wantToRead">Want to Read</option>
-                <option value="read">Read</option>
-                <option value="none">None</option>
+                <select value={value} onChange={this.handleSelect}>
+                    <option value="move" disabled>Move to...</option>
+                    <option value="currentlyReading">Currently Reading</option>
+                    <option value="wantToRead">Want to Read</option>
+                    <option value="read">Read</option>
+                    <option value="none">None</option>
                 </select>
             </div>
         );
