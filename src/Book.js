@@ -1,10 +1,10 @@
 import React from 'react';
 import BookShelfChanger from './BookShelfChanger';
+import PropTypes from 'prop-types';
 
 const Book = props => {
 
     const handleShelfChange = shelf => {
-
         const { onChangeShelf, book } = props;
         onChangeShelf(book, shelf);
     }
@@ -14,7 +14,7 @@ const Book = props => {
     const thumbnail = book.imageLinks ? book.imageLinks.thumbnail : '';
     const shelf = book.shelf || 'none';
     const title = book.title;
-    const authors = book.authors;
+    const authors = book.authors ? book.authors : '';
 
     return(
         <li key={id}>
@@ -28,6 +28,11 @@ const Book = props => {
             </div>
         </li>
     );
+}
+
+Book.propTypes = {
+    book: PropTypes.object.isRequired,
+    onChangeShelf: PropTypes.func.isRequired
 }
 
 export default Book;

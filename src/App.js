@@ -55,11 +55,6 @@ class BooksApp extends React.Component {
 
     const bookShelves = [currentlyReading, wantToRead, read];
 
-    console.log('books', books);
-    console.log('currentlyReading', currentlyReading);
-    console.log('wantToRead', wantToRead);
-    console.log('read', read);
-
     return (
       <div className="app">
 
