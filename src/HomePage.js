@@ -8,6 +8,9 @@ const HomePage = props => {
 
     const { bookShelves, shelfTitles, changeShelf } = props;
 
+    /**
+     * @description map through bookShelves array and render each type of bookshelf
+     */
     const renderBookShelves = bookShelves.map((bookShelf, index) => (
         <BookShelf key={index}  title={shelfTitles[index]} bookList={bookShelf} onChangeShelf={changeShelf} />
     ));

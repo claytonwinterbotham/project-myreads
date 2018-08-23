@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import * as BooksAPI from './BooksAPI';
 import './App.css';
 import HomePage from './HomePage';
@@ -7,8 +7,11 @@ import { Route } from 'react-router-dom';
 
 
 
-class BooksApp extends React.Component {
+class BooksApp extends Component {
   
+  /**
+   * @description store shelf titles and and shelf type string values to arrays
+   */
   shelfTitles = ['Currently Reading', 'Want To Read', 'Read'];
   shelfTypes = ['currentlyReading', 'wantToRead', 'read'];
 
@@ -23,6 +26,10 @@ class BooksApp extends React.Component {
     this.getBooks();
   }
 
+
+  /** 
+   * @description Perfoms Get request and then calls sortBooks function on response
+   */
   getBooks = () => {
     BooksAPI.getAll()
       .then((books) => {
@@ -30,6 +37,10 @@ class BooksApp extends React.Component {
       })  
   }
 
+  /** 
+   * @description Sorts the book array from .getAll() request into associated book shelf arrays
+   * and updates the state for each shelf.
+   */
   sortBooks = (books) => {
     const currentlyReading = this.shelfTypes[0]
     , wantToRead = this.shelfTypes[1]
@@ -43,6 +54,9 @@ class BooksApp extends React.Component {
     }));
   }
 
+  /**
+   * @description Update the books object shelf property
+   */
   updateShelf = (book, shelf) => {
     BooksAPI.update(book, shelf)
      .then(() => {
@@ -53,6 +67,9 @@ class BooksApp extends React.Component {
   render() {
     const { books, currentlyReading, wantToRead, read } = this.state;
 
+    /**
+     * @description Store all three bookShelve arrays in one bookShelves array
+     */
     const bookShelves = [currentlyReading, wantToRead, read];
 
     return (

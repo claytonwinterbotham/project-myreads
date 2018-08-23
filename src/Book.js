@@ -4,6 +4,10 @@ import PropTypes from 'prop-types';
 
 const Book = props => {
 
+    /**
+     * @description pass shelf string value to onChangeShelf callback
+     * @param {string} shelf - current shelf value of book
+     */
     const handleShelfChange = shelf => {
         const { onChangeShelf, book } = props;
         onChangeShelf(book, shelf);

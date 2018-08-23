@@ -10,6 +10,10 @@ class SearchPage extends Component {
         books: []
     };
 
+    /**
+     * @description returns an array of books based on user input
+     * @param {string} query - User input from text input
+     */
     searchBooks = (query) => {
         BooksAPI.search(query)
           .then((books) => {
@@ -18,6 +22,11 @@ class SearchPage extends Component {
           });  
       };
     
+    /**
+     * @description adds book from userBooks array to search results if both array contain the same book
+     * @param {array} searchResults - search results array
+     * @param {array} userBooks - user books array
+     */  
     aggrigateSearch = (searchResults, userBooks) => {
         var result = searchResults.reduce( (r, e) => {
             var f = userBooks.find(el => e.id === el.id)
@@ -30,6 +39,9 @@ class SearchPage extends Component {
           }));
     }  
 
+    /**
+     * @description handle user input and set value to state
+     */
     handleChange = event => {
         const value =  event.target.value;
         this.setState({ 
@@ -43,6 +55,9 @@ class SearchPage extends Component {
         const { books } = this.state;
         const { onChangeShelf } = this.props;
 
+        /**
+         * @description map through book results and render books
+         */
         const bookResults = books.length !== 0 ? books.map(book => (
             <Book key={book.id} book={book} onChangeShelf={onChangeShelf} />
         )) : 'No Results';

@@ -6,6 +6,9 @@ const BookShelf = props => {
     
     const { title, bookList, onChangeShelf } = props;
 
+    /**
+     * @description map through bookList array and render each book
+     */
     const books = bookList.map(book => (
         <Book key={book.id} book={book} onChangeShelf={onChangeShelf} />
     ));

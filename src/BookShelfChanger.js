@@ -14,6 +14,10 @@ class BookShelfChanger extends Component {
         });
     };
 
+    /**
+     * @description set selected state value and pass value to onSelect callback
+     * @param {string} event - retrieve value of event target
+     */
     handleSelect = event => {
         const { onSelect } = this.props;
         const value = event.target.value;
