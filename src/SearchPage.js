@@ -19,6 +19,9 @@ class SearchPage extends Component {
           .then((books) => {
             if(!books.error)
                 this.aggrigateSearch(books, this.props.userBooks);
+            else{
+                this.setState({ books: [] });
+            }    
           });  
       };
     

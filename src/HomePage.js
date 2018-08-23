@@ -6,14 +6,21 @@ import PropTypes from 'prop-types';
 
 const HomePage = props => {
 
-    const { bookShelves, shelfTitles, changeShelf } = props;
+    /**
+   * @description store shelf titles and and shelf type string values to arrays
+   */
+    const shelfTitles = ['Currently Reading', 'Want To Read', 'Read'];
+    const shelfTypes = ['currentlyReading', 'wantToRead', 'read'];
+
+    const { books, changeShelf } = props;
 
     /**
      * @description map through bookShelves array and render each type of bookshelf
      */
-    const renderBookShelves = bookShelves.map((bookShelf, index) => (
-        <BookShelf key={index}  title={shelfTitles[index]} bookList={bookShelf} onChangeShelf={changeShelf} />
-    ));
+    const renderBookShelves = shelfTypes.map((type, index) => {
+        const bookShelf = books.filter(book => book.shelf === type);
+        return <BookShelf key={type} title={shelfTitles[index]} bookList={bookShelf} onChangeShelf={changeShelf} /> 
+    })
 
     return(
         <div className="list-books">
@@ -33,8 +40,7 @@ const HomePage = props => {
 }
 
 HomePage.propTypes = {
-    bookShelves: PropTypes.array.isRequired,
-    shelfTitles: PropTypes.array.isRequired,
+    books: PropTypes.array.isRequired,
     changeShelf: PropTypes.func.isRequired
 }
 

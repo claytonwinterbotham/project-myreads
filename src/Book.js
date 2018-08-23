@@ -1,6 +1,7 @@
 import React from 'react';
 import BookShelfChanger from './BookShelfChanger';
 import PropTypes from 'prop-types';
+import style from './styles';
 
 const Book = props => {
 
@@ -24,7 +25,7 @@ const Book = props => {
         <li key={id}>
             <div className="book">
                 <div className="book-top">
-                <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${thumbnail})` }}></div>
+                <div className="book-cover" style={{ ...style, backgroundImage: `url(${thumbnail})` }}></div>
                     <BookShelfChanger currentShelf={shelf} onSelect={handleShelfChange} />
                 </div>
                 <div className="book-title">{title}</div>

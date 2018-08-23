@@ -9,83 +9,56 @@ import { Route } from 'react-router-dom';
 
 class BooksApp extends Component {
   
-  /**
-   * @description store shelf titles and and shelf type string values to arrays
-   */
-  shelfTitles = ['Currently Reading', 'Want To Read', 'Read'];
-  shelfTypes = ['currentlyReading', 'wantToRead', 'read'];
-
   state = {
     books: [],
-    currentlyReading: [],
-    wantToRead: [],
-    read: [],
   }
 
   componentDidMount() {
     this.getBooks();
   }
 
-
   /** 
-   * @description Perfoms Get request and then calls sortBooks function on response
+   * @description Perfoms Get request and sets state for books
    */
   getBooks = () => {
     BooksAPI.getAll()
       .then((books) => {
-        this.sortBooks(books)
+        this.setState({
+          books
+        });
       })  
-  }
-
-  /** 
-   * @description Sorts the book array from .getAll() request into associated book shelf arrays
-   * and updates the state for each shelf.
-   */
-  sortBooks = (books) => {
-    const currentlyReading = this.shelfTypes[0]
-    , wantToRead = this.shelfTypes[1]
-    , read = this.shelfTypes[2];
-
-    this.setState(() => ({
-      books,
-      currentlyReading: books.filter(book => book.shelf === currentlyReading),
-      wantToRead: books.filter(book => book.shelf === wantToRead),
-      read: books.filter(book => book.shelf === read),
-    }));
   }
 
   /**
    * @description Update the books object shelf property
    */
-  updateShelf = (book, shelf) => {
+  changeShelf = (book, shelf) => {
+    book.shelf = shelf
     BooksAPI.update(book, shelf)
      .then(() => {
-       this.getBooks();
+       this.setState(state => ({ books: state.books
+         .filter(b => b.id !== book.id)
+         .concat(book)
+       }))
      });
   }
 
   render() {
-    const { books, currentlyReading, wantToRead, read } = this.state;
-
-    /**
-     * @description Store all three bookShelve arrays in one bookShelves array
-     */
-    const bookShelves = [currentlyReading, wantToRead, read];
+    const { books } = this.state;
 
     return (
       <div className="app">
 
         <Route exact path='/' render={() => (
           <HomePage 
-            bookShelves={bookShelves}
-            shelfTitles={this.shelfTitles}
-            changeShelf={this.updateShelf}
+            books={books}
+            changeShelf={this.changeShelf}
          />
         )} />
 
         <Route path='/search' render={() => (
           <SearchPage
-             onChangeShelf={this.updateShelf}
+             onChangeShelf={this.changeShelf}
              userBooks={books}
           />
         )} />
