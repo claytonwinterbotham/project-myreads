@@ -23,7 +23,7 @@ class SearchPage extends Component {
       };
     
     /**
-     * @description adds book from userBooks array to search results if both array contain the same book
+     * @description uses book from userBooks array in search results if both array contain the same book
      * @param {array} searchResults - search results array
      * @param {array} userBooks - user books array
      */  
